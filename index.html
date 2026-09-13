@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roast & Relax Cafe</title>
+    <!-- นำเข้าฟอนต์ Google Font: Kanit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- ตั้งค่าพื้นฐาน --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Kanit', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --primary-color: #6F4E37; /* สีน้ำตาลกาแฟ */
+            --secondary-color: #ECE0D1; /* สีครีมลาเต้ */
+            --bg-color: #FFFDF9; /* สีขาวนวล */
+            --text-dark: #3D2314; /* สีน้ำตาลเข้มเกือบดำ */
+            --text-light: #7D6B5D;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* --- Navigation Bar --- */
+        header {
+            background-color: rgba(255, 255, 255, 0.95);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 400;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* --- Hero Section (หน้าแรก) --- */
+        .hero {
+            height: 100vh;
+            /* ใช้รูปภาพบรรยากาศคาเฟ่จาก Unsplash */
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                        url('https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=1600') no-repeat center center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 20px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 500;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #553c2a;
+            transform: translateY(-2px);
+        }
+
+        /* --- Section Common Layout --- */
+        section {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 40px;
+            position: relative;
+            color: var(--primary-color);
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary-color);
+            margin: 10px auto 0;
+        }
+
+        /* --- About Section (เกี่ยวกับเรา) --- */
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            flex-wrap: wrap;
+        }
+
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .about-text p {
+            margin-bottom: 15px;
+            color: var(--text-light);
+        }
+
+        .about-img {
+            flex: 1;
+            min-width: 300px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .about-img img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* --- Menu Section (เมนูแนะนำ) --- */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .menu-item {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .menu-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .menu-info {
+            padding: 20px;
+        }
+
+        .menu-name-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .menu-price {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .menu-desc {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        /* --- Contact Section (เวลาเปิด-ปิด & สถานที่) --- */
+        .contact-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .contact-info, .contact-time {
+            flex: 1;
+            min-width: 280px;
+            background-color: var(--secondary-color);
+            padding: 30px;
+            border-radius: 15px;
+        }
+
+        .contact-info h3, .contact-time h3 {
+            margin-bottom: 15px;
+            color: var(--text-dark);
+        }
+
+        /* --- Footer --- */
+        footer {
+            background-color: var(--text-dark);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+            font-size: 14px;
+        }
+
+        /* --- Responsive หน้าจอจอมือถือ --- */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none; /* เพื่อความง่ายในตัวอย่างนี้ ขอซ่อนเมนูบนมือถือก่อนครับ */
+            }
+            .hero h1 {
+                font-size: 36px;
+            }
+            .hero p {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header / Navigation -->
+    <header>
+        <nav class="navbar">
+            <a href="#" class="logo">Roast & Relax</a>
+            <ul class="nav-links">
+                <li><a href="#">หน้าแรก</a></li>
+                <li><a href="#about">เกี่ยวกับเรา</a></li>
+                <li><a href="#menu">เมนูแนะนำ</a></li>
+                <li><a href="#contact">ติดต่อเรา</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>ยินดีต้อนรับสู่ Roast & Relax Cafe</h1>
+        <p>กลิ่นหอมของกาแฟคั่วสดใหม่ และบรรยากาศอบอุ่นที่รอต้อนรับคุณในทุกวัน</p>
+        <a href="#menu" class="btn">ดูเมนูของเรา</a>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <h2 class="section-title">เรื่องราวของเรา</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>เราคัดสรรเมล็ดกาแฟสายพันธุ์ดีจากแหล่งปลูกที่ยั่งยืน นำมาคั่วด้วยความใส่ใจเพื่อดึงรสชาติที่ดีที่สุดออกมาในทุกๆ แก้ว</p>
+                <p>ไม่ว่าคุณจะต้องการพื้นที่นั่งทำงานเงียบๆ คุยธุรกิจ หรือพักผ่อนในวันหยุด ร้านของเราพร้อมมอบบรรยากาศสบายๆ เหมือนอยู่บ้าน พร้อมเบเกอรี่โฮมเมดที่อบใหม่ทุกเช้า</p>
+            </div>
+            <div class="about-img">
+                <!-- รูปภาพประกอบโซนเกี่ยวกับเรา -->
+                <img src="รวมมิตร.png" alt="บรรยากาศในร้าน">
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu">
+        <h2 class="section-title">เมนูแนะนำ</h2>
+        <div class="menu-grid">
+            
+            <!-- Item 1 -->
+            <div class="menu-item">
+                <img src="คอหมู.jpg" alt="Signature Latte">
+                <div class="menu-info">
+                    <div class="menu-name-price">
+                        <h4>Signature Latte</h4>
+                        <span class="menu-price">฿85</span>
+                    </div>
+                    <p class="menu-desc">ลาเต้รสนุ่มละมุน ผสมผสานนมสดแท้กับช็อตเอสเพรสโซ่เข้มข้นสูตรพิเศษ</p>
+                </div>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="menu-item">
+                <img src="ลาบ.jpg" alt="Dirty Coffee">
+                <div class="menu-info">
+                    <div class="menu-name-price">
+                        <h4>Dirty Coffee</h4>
+                        <span class="menu-price">฿95</span>
+                    </div>
+                    <p class="menu-desc">นมสดเย็นจัดราดด้านบนด้วยช็อต Ristretto เข้มข้น ให้สัมผัสที่แยกชั้นชัดเจน</p>
+                </div>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="menu-item">
+                <img src="ส้มตำ.jpg" alt="Almond Croissant">
+                <div class="menu-info">
+                    <div class="menu-name-price">
+                        <h4>Almond Croissant</h4>
+                        <span class="menu-price">฿75</span>
+                    </div>
+                    <p class="menu-desc">ครัวซองต์เนยสดฝรั่งเศส แป้งกรอบนอกนุ่มใน โรยหน้าด้วยอัลมอนด์สไลด์หอมมัน</p>
+                </div>
+            </div>
+ <!-- Item 4 -->
+            <div class="menu-item">
+                <img src="คอหมู.jpg" alt="Signature Latte">
+                <div class="menu-info">
+                    <div class="menu-name-price">
+                        <h4>Signature Latte</h4>
+                        <span class="menu-price">฿85</span>
+                    </div>
+                    <p class="menu-desc">ลาเต้รสนุ่มละมุน ผสมผสานนมสดแท้กับช็อตเอสเพรสโซ่เข้มข้นสูตรพิเศษ</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2 class="section-title">แวะมาหาเรา</h2>
+        <div class="contact-container">
+            <div class="contact-time">
+                <h3>🕒 เวลาทำการ</h3>
+                <p><strong>วันจันทร์ - วันศุกร์:</strong> 07:00 น. - 18:00 น.</p>
+                <p><strong>วันเสาร์ - วันอาทิตย์:</strong> 08:00 น. - 19:00 น.</p>
+            </div>
+            <div class="contact-info">
+                <h3>📍 สถานที่ตั้ง & ติดต่อ</h3>
+                <p>123 ถนนสุขุมวิท แขวงคลองเตย เขตคลองเตย กรุงเทพฯ</p>
+                <p><strong>เบอร์โทร:</strong> 02-xxx-xxxx</p>
+                <p><strong>Instagram:</strong> @roastandrelax</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Roast & Relax Cafe. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>
