@@ -3,135 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Roast & Relax Cafe</title>
-    <!-- นำเข้าฟอนต์ Google Font: Kanit -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>ดนัยคอหมูย่าง - ส้มตำ อาหารอีสานรสเด็ด พหลโยธิน 44</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* --- ตั้งค่าพื้นฐาน --- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Kanit', sans-serif;
-            scroll-behavior: smooth;
+        :root {
+            --primary-color: #d32f2f; /* แดงแซ่บ */
+            --secondary-color: #f57c00; /* ส้มอิฐ/ย่าง */
+            --dark-color: #212121;
+            --light-color: #f9f9f9;
         }
 
-        :root {
-            --primary-color: #6F4E37; /* สีน้ำตาลกาแฟ */
-            --secondary-color: #ECE0D1; /* สีครีมลาเต้ */
-            --bg-color: #FFFDF9; /* สีขาวนวล */
-            --text-dark: #3D2314; /* สีน้ำตาลเข้มเกือบดำ */
-            --text-light: #7D6B5D;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Kanit', sans-serif;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-dark);
+            background-color: #f4f4f4;
+            color: var(--dark-color);
             line-height: 1.6;
         }
 
-        /* --- Navigation Bar --- */
-        header {
-            background-color: rgba(255, 255, 255, 0.95);
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .logo {
-            font-size: 24px;
-            font-weight: 600;
-            color: var(--primary-color);
-            text-decoration: none;
-        }
-
-        .nav-links {
-            list-style: none;
-            display: flex;
-            gap: 25px;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-dark);
-            font-weight: 400;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary-color);
-        }
-
-        /* --- Hero Section (หน้าแรก) --- */
+        /* Hero Banner */
         .hero {
-            height: 100vh;
-            /* ใช้รูปภาพบรรยากาศคาเฟ่จาก Unsplash */
-            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
-                        url('https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=1600') no-repeat center center/cover;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                        url('https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=1000&q=80') center/cover no-repeat;
             color: white;
-            padding: 20px;
+            text-align: center;
+            padding: 80px 20px;
         }
 
         .hero h1 {
-            font-size: 48px;
-            margin-bottom: 15px;
-            font-weight: 600;
+            font-size: 2.5rem;
+            color: #ffeb3b;
+            margin-bottom: 10px;
         }
 
         .hero p {
-            font-size: 20px;
-            margin-bottom: 30px;
-            font-weight: 300;
+            font-size: 1.2rem;
+            margin-bottom: 25px;
         }
 
         .btn {
             display: inline-block;
+            padding: 12px 25px;
             background-color: var(--primary-color);
             color: white;
-            padding: 12px 30px;
             text-decoration: none;
             border-radius: 30px;
-            font-weight: 500;
-            transition: background 0.3s, transform 0.3s;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin: 5px;
+            transition: 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+
+        .btn-line {
+            background-color: #06C755;
         }
 
         .btn:hover {
-            background-color: #553c2a;
             transform: translateY(-2px);
+            opacity: 0.9;
         }
 
-        /* --- Section Common Layout --- */
-        section {
-            padding: 80px 20px;
-            max-width: 1200px;
+        /* Container Section */
+        .container {
+            max-width: 900px;
             margin: 0 auto;
+            padding: 20px;
         }
 
         .section-title {
             text-align: center;
-            font-size: 32px;
-            margin-bottom: 40px;
-            position: relative;
+            margin: 30px 0 20px;
+            font-size: 1.8rem;
             color: var(--primary-color);
+            position: relative;
         }
 
         .section-title::after {
@@ -139,246 +93,213 @@
             display: block;
             width: 50px;
             height: 3px;
-            background-color: var(--primary-color);
-            margin: 10px auto 0;
+            background: var(--secondary-color);
+            margin: 8px auto 0;
         }
 
-        /* --- About Section (เกี่ยวกับเรา) --- */
-        .about-content {
-            display: flex;
-            align-items: center;
-            gap: 50px;
-            flex-wrap: wrap;
-        }
-
-        .about-text {
-            flex: 1;
-            min-width: 300px;
-        }
-
-        .about-text p {
-            margin-bottom: 15px;
-            color: var(--text-light);
-        }
-
-        .about-img {
-            flex: 1;
-            min-width: 300px;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-
-        .about-img img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        /* --- Menu Section (เมนูแนะนำ) --- */
-        .menu-grid {
+        /* Highlights Grid */
+        .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
         }
 
-        .menu-item {
-            background-color: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            transition: transform 0.3s;
-        }
-
-        .menu-item:hover {
-            transform: translateY(-5px);
-        }
-
-        .menu-item img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-
-        .menu-info {
+        .card {
+            background: white;
+            border-radius: 12px;
             padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
 
-        .menu-name-price {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .card i {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
             margin-bottom: 10px;
         }
 
-        .menu-price {
-            color: var(--primary-color);
-            font-weight: 600;
+        /* Services & Banner Box */
+        .special-box {
+            background: #fff3e0;
+            border-left: 5px solid var(--secondary-color);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
         }
 
-        .menu-desc {
-            font-size: 14px;
-            color: var(--text-light);
+        .special-box h3 {
+            color: var(--secondary-color);
+            margin-bottom: 10px;
         }
 
-        /* --- Contact Section (เวลาเปิด-ปิด & สถานที่) --- */
-        .contact-container {
+        /* Info & Location */
+        .info-box {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .info-item {
             display: flex;
-            justify-content: space-between;
-            gap: 40px;
-            flex-wrap: wrap;
-        }
-
-        .contact-info, .contact-time {
-            flex: 1;
-            min-width: 280px;
-            background-color: var(--secondary-color);
-            padding: 30px;
-            border-radius: 15px;
-        }
-
-        .contact-info h3, .contact-time h3 {
+            align-items: flex-start;
             margin-bottom: 15px;
-            color: var(--text-dark);
         }
 
-        /* --- Footer --- */
+        .info-item i {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            margin-right: 15px;
+            margin-top: 5px;
+        }
+
+        /* Footer */
         footer {
-            background-color: var(--text-dark);
+            background: var(--dark-color);
             color: white;
             text-align: center;
             padding: 20px;
-            margin-top: 50px;
-            font-size: 14px;
+            margin-top: 40px;
+            font-size: 0.9rem;
         }
 
-        /* --- Responsive หน้าจอจอมือถือ --- */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none; /* เพื่อความง่ายในตัวอย่างนี้ ขอซ่อนเมนูบนมือถือก่อนครับ */
-            }
-            .hero h1 {
-                font-size: 36px;
-            }
-            .hero p {
-                font-size: 16px;
+        /* Sticky Call Bar for Mobile */
+        .mobile-sticky-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .mobile-sticky-bar .btn {
+            flex: 1;
+            text-align: center;
+            font-size: 0.95rem;
+            padding: 10px;
+            margin: 0 5px;
+        }
+
+        @media (min-width: 768px) {
+            .mobile-sticky-bar {
+                display: none; /* ซ่อนปุ่มลอยเมื่อเปิดบนคอม */
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Header / Navigation -->
-    <header>
-        <nav class="navbar">
-            <a href="#" class="logo">Roast & Relax</a>
-            <ul class="nav-links">
-                <li><a href="#">หน้าแรก</a></li>
-                <li><a href="#about">เกี่ยวกับเรา</a></li>
-                <li><a href="#menu">เมนูแนะนำ</a></li>
-                <li><a href="#contact">ติดต่อเรา</a></li>
-            </ul>
-        </nav>
+    <!-- Hero Section -->
+    <header class="hero">
+        <h1>ดนัยคอหมูย่าง</h1>
+        <p>ส้มตำ อาหารอีสานรสเด็ด & หมูกระทะเตาถ่าน</p>
+        <p><i class="fa-solid fa-location-dot"></i> พหลโยธิน 44 (ทางเข้าโรงแรม)</p>
+        <div style="margin-top: 15px;">
+            <a href="tel:0626296544" class="btn"><i class="fa-solid fa-phone"></i> โทรสั่งอาหาร</a>
+            <a href="https://line.me/ti/p/~0643578342" target="_blank" class="btn btn-line"><i class="fa-brands fa-line"></i> สั่งข้าวกล่อง / Line</a>
+        </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <h1>ยินดีต้อนรับสู่ Roast & Relax Cafe</h1>
-        <p>กลิ่นหอมของกาแฟคั่วสดใหม่ และบรรยากาศอบอุ่นที่รอต้อนรับคุณในทุกวัน</p>
-        <a href="#menu" class="btn">ดูเมนูของเรา</a>
-    </section>
-
-    <!-- About Section -->
-    <section id="about">
-        <h2 class="section-title">เรื่องราวของเรา</h2>
-        <div class="about-content">
-            <div class="about-text">
-                <p>เราคัดสรรเมล็ดกาแฟสายพันธุ์ดีจากแหล่งปลูกที่ยั่งยืน นำมาคั่วด้วยความใส่ใจเพื่อดึงรสชาติที่ดีที่สุดออกมาในทุกๆ แก้ว</p>
-                <p>ไม่ว่าคุณจะต้องการพื้นที่นั่งทำงานเงียบๆ คุยธุรกิจ หรือพักผ่อนในวันหยุด ร้านของเราพร้อมมอบบรรยากาศสบายๆ เหมือนอยู่บ้าน พร้อมเบเกอรี่โฮมเมดที่อบใหม่ทุกเช้า</p>
+    <div class="container">
+        <!-- เมนูเด็ด -->
+        <h2 class="section-title">เมนูเด็ดต้องลอง</h2>
+        <div class="grid">
+            <div class="card">
+                <i class="fa-solid fa-fire-flame-curry"></i>
+                <h3>คอหมูย่าง & หมูปิ้ง</h3>
+                <p>สูตรเด็ดหมักเข้มข้น ย่างเตาถ่านหอมๆ นุ่มฉ่ำทุกคำ</p>
             </div>
-            <div class="about-img">
-                <!-- รูปภาพประกอบโซนเกี่ยวกับเรา -->
-                <img src="รวมมิตร.png" alt="บรรยากาศในร้าน">
+            <div class="card">
+                <i class="fa-solid fa-pepper-hot"></i>
+                <h3>ส้มตำ & อาหารอีสาน</h3>
+                <p>แซ่บนัว รสจัดจ้าน วัตถุดิบสดใหม่ สะอาด ถูกสุขอนามัย</p>
             </div>
-        </div>
-    </section>
-
-    <!-- Menu Section -->
-    <section id="menu">
-        <h2 class="section-title">เมนูแนะนำ</h2>
-        <div class="menu-grid">
-            
-            <!-- Item 1 -->
-            <div class="menu-item">
-                <img src="คอหมู.jpg" alt="Signature Latte">
-                <div class="menu-info">
-                    <div class="menu-name-price">
-                        <h4>Signature Latte</h4>
-                        <span class="menu-price">฿85</span>
-                    </div>
-                    <p class="menu-desc">ลาเต้รสนุ่มละมุน ผสมผสานนมสดแท้กับช็อตเอสเพรสโซ่เข้มข้นสูตรพิเศษ</p>
-                </div>
-            </div>
-
-            <!-- Item 2 -->
-            <div class="menu-item">
-                <img src="ลาบ.jpg" alt="Dirty Coffee">
-                <div class="menu-info">
-                    <div class="menu-name-price">
-                        <h4>Dirty Coffee</h4>
-                        <span class="menu-price">฿95</span>
-                    </div>
-                    <p class="menu-desc">นมสดเย็นจัดราดด้านบนด้วยช็อต Ristretto เข้มข้น ให้สัมผัสที่แยกชั้นชัดเจน</p>
-                </div>
-            </div>
-
-            <!-- Item 3 -->
-            <div class="menu-item">
-                <img src="ส้มตำ.jpg" alt="Almond Croissant">
-                <div class="menu-info">
-                    <div class="menu-name-price">
-                        <h4>Almond Croissant</h4>
-                        <span class="menu-price">฿75</span>
-                    </div>
-                    <p class="menu-desc">ครัวซองต์เนยสดฝรั่งเศส แป้งกรอบนอกนุ่มใน โรยหน้าด้วยอัลมอนด์สไลด์หอมมัน</p>
-                </div>
-            </div>
- <!-- Item 4 -->
-            <div class="menu-item">
-                <img src="คอหมู.jpg" alt="Signature Latte">
-                <div class="menu-info">
-                    <div class="menu-name-price">
-                        <h4>Signature Latte</h4>
-                        <span class="menu-price">฿85</span>
-                    </div>
-                    <p class="menu-desc">ลาเต้รสนุ่มละมุน ผสมผสานนมสดแท้กับช็อตเอสเพรสโซ่เข้มข้นสูตรพิเศษ</p>
-                </div>
+            <div class="card">
+                <i class="fa-solid fa-utensils"></i>
+                <h3>หมูกระทะเตาถ่าน</h3>
+                <p>พร้อมเสิร์ฟความแซ่บ น้ำจิ้มรสเด็ด นั่งชิลๆ ยามเย็น</p>
             </div>
         </div>
-    </section>
 
-    <!-- Contact Section -->
-    <section id="contact">
-        <h2 class="section-title">แวะมาหาเรา</h2>
-        <div class="contact-container">
-            <div class="contact-time">
-                <h3>🕒 เวลาทำการ</h3>
-                <p><strong>วันจันทร์ - วันศุกร์:</strong> 07:00 น. - 18:00 น.</p>
-                <p><strong>วันเสาร์ - วันอาทิตย์:</strong> 08:00 น. - 19:00 น.</p>
+        <!-- บริการพิเศษ -->
+        <h2 class="section-title">บริการพิเศษ</h2>
+        <div class="special-box">
+            <h3><i class="fa-solid fa-box-open"></i> รับทำข้าวกล่อง & จัดเลี้ยงนอกสถานที่</h3>
+            <p>บริการจัดทำข้าวกล่อง (เมนูกะเพราดนัย, ข้าวคอหมูย่าง ฯลฯ) สำหรับงานประชุม ออฟฟิศ หรือจัดเลี้ยงต่างๆ มีราคาพิเศษ ทักแชทสั่งล่วงหน้าได้เลย!</p>
+        </div>
+
+        <div class="special-box" style="background: #e8f5e9; border-color: #4caf50;">
+            <h3 style="color: #2e7d32;"><i class="fa-solid fa-truck"></i> พรีออเดอร์หมูปิ้งตอนเช้า</h3>
+            <p>ส่งตามสำนักงาน บริษัท และสถานที่ต่างๆ (เวลาส่ง 07:30 - 09:00 น.)<br>
+            * สั่งขั้นต่ำ 60 ไม้ <strong>ส่งฟรี</strong> บริเวณใกล้เคียงร้าน<br>
+            * แพ็กเกจแคมป์ปิ้ง 20 ไม้ / ถุง (ราคา 200 บาท)</p>
+        </div>
+
+        <!-- ข้อมูลร้าน -->
+        <h2 class="section-title">ข้อมูลและการเดินทาง</h2>
+        <div class="info-box">
+            <div class="info-item">
+                <i class="fa-solid fa-clock"></i>
+                <div>
+                    <strong>เวลาเปิด-ปิด:</strong><br>
+                    11.30 - 23.59 น. (ครัวปิด 21.00 น.)
+                </div>
             </div>
-            <div class="contact-info">
-                <h3>📍 สถานที่ตั้ง & ติดต่อ</h3>
-                <p>123 ถนนสุขุมวิท แขวงคลองเตย เขตคลองเตย กรุงเทพฯ</p>
-                <p><strong>เบอร์โทร:</strong> 02-xxx-xxxx</p>
-                <p><strong>Instagram:</strong> @roastandrelax</p>
+            <div class="info-item">
+                <i class="fa-solid fa-map-location-dot"></i>
+                <div>
+                    <strong>ที่อยู่ร้าน:</strong><br>
+                    พหลโยธิน 44 แขวงเสนานิคม เขตจตุจักร กรุงเทพฯ 10900<br>
+                    <small style="color: #666;">* ร้านตั้งอยู่บริเวณทางเข้าโรงแรม</small>
+                </div>
+            </div>
+            <div class="info-item">
+                <i class="fa-solid fa-phone"></i>
+                <div>
+                    <strong>เบอร์โทรศัพท์:</strong> <a href="tel:0626296544">062-629-6544</a>
+                </div>
+            </div>
+            <div class="info-item">
+                <i class="fa-brands fa-facebook"></i>
+                <div>
+                    <strong>Facebook Page:</strong> <a href="https://www.facebook.com/DnayKhxHmuYang/" target="_blank">ดนัยคอหมูย่าง</a>
+                </div>
+            </div>
+
+            <!-- Google Map Embed -->
+            <div style="margin-top: 20px; border-radius: 8px; overflow: hidden;">
+                <iframe 
+                    src="https://maps.google.com/maps?q=พหลโยธิน+44+เสนานิคม+จตุจักร&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+                    width="100%" 
+                    height="250" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy">
+                </iframe>
             </div>
         </div>
-    </section>
+    </div>
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2026 Roast & Relax Cafe. All Rights Reserved.</p>
+        <p>&copy; ดนัยคอหมูย่าง - ส้มตำ อาหารอีสานรสเด็ด พหลโยธิน 44</p>
     </footer>
+
+    <!-- Mobile Sticky Call Bar (แสดงเฉพาะบนมือถือ) -->
+    <div class="mobile-sticky-bar">
+        <a href="tel:0626296544" class="btn"><i class="fa-solid fa-phone"></i> โทรสั่งทันที</a>
+        <a href="https://line.me/ti/p/~0643578342" target="_blank" class="btn btn-line"><i class="fa-brands fa-line"></i> แอดไลน์สั่งซื้อ</a>
+    </div>
 
 </body>
 </html>
