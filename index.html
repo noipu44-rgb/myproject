@@ -1,305 +1,402 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ดนัยคอหมูย่าง - ส้มตำ อาหารอีสานรสเด็ด พหลโยธิน 44</title>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ดนัย คอหมูย่าง - ระบบสั่งอาหารออนไลน์ (Advanced Project)</title>
+  
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+  <style>
+    :root {
+      --primary: #D9381E;
+      --secondary: #F4A261;
+      --bg-color: #121212;
+      --card-bg: #1E1E1E;
+      --text-color: #F8F9FA;
+      --text-muted: #A0A0A0;
+      --border-color: rgba(255, 255, 255, 0.1);
+      --font: 'Prompt', sans-serif;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    [data-theme="light"] {
+      --bg-color: #F8F9FA;
+      --card-bg: #FFFFFF;
+      --text-color: #1A1A1A;
+      --text-muted: #6C757D;
+      --border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font); }
+    body { background-color: var(--bg-color); color: var(--text-color); transition: var(--transition); line-height: 1.6; }
+    a { text-decoration: none; color: inherit; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+    /* Navigation */
+    .header { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(18,18,18,0.9); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); }
+    [data-theme="light"] .header { background: rgba(248,249,250,0.9); }
+    .nav-container { display: flex; justify-content: space-between; align-items: center; height: 75px; }
+    .logo { font-size: 1.4rem; font-weight: 700; cursor: pointer; }
+    .logo span { color: var(--primary); }
+    .nav-links { display: flex; gap: 15px; list-style: none; }
+    .nav-link { cursor: pointer; font-weight: 500; transition: var(--transition); padding: 6px 12px; border-radius: 8px; }
+    .nav-link:hover, .nav-link.active { color: var(--primary); background: rgba(217, 56, 30, 0.15); }
+    .nav-actions { display: flex; align-items: center; gap: 12px; }
+
+    /* Buttons */
+    .btn { padding: 8px 18px; border-radius: 50px; font-weight: 600; cursor: pointer; border: none; transition: var(--transition); display: inline-flex; align-items: center; gap: 8px; font-size: 0.9rem; }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: #b52b14; transform: translateY(-2px); }
+    .btn-outline { background: transparent; border: 1px solid var(--primary); color: var(--primary); }
+    .btn-outline:hover { background: var(--primary); color: white; }
+    .btn-theme { background: transparent; color: var(--text-color); border: 1px solid var(--border-color); width: 40px; height: 40px; border-radius: 50%; justify-content: center; }
+
+    .cart-btn { position: relative; background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-color); padding: 8px 16px; border-radius: 30px; cursor: pointer; }
+    .cart-badge { position: absolute; top: -5px; right: -5px; background: var(--primary); color: white; font-size: 0.75rem; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+
+    /* Page Switcher */
+    .page { display: none; padding-top: 100px; padding-bottom: 60px; min-height: 85vh; animation: fadeIn 0.4s ease; }
+    .page.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Advanced Menu Card Layout */
+    .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
+    .menu-card { background: var(--card-bg); border-radius: 16px; overflow: hidden; border: 1px solid var(--border-color); display: flex; flex-direction: column; position: relative; transition: var(--transition); }
+    .menu-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
     
-    <style>
-        :root {
-            --primary-color: #d32f2f; /* แดงแซ่บ */
-            --secondary-color: #f57c00; /* ส้มอิฐ/ย่าง */
-            --dark-color: #212121;
-            --light-color: #f9f9f9;
-        }
+    .card-badge { position: absolute; top: 12px; left: 12px; background: var(--primary); color: white; font-size: 0.75rem; font-weight: 700; padding: 4px 10px; border-radius: 20px; z-index: 2; }
+    
+    .img-container { position: relative; height: 200px; overflow: hidden; cursor: pointer; }
+    .menu-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+    .menu-card:hover .menu-img { transform: scale(1.08); }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Kanit', sans-serif;
-        }
+    .menu-content { padding: 18px; display: flex; flex-direction: column; flex-grow: 1; }
+    .menu-tags { display: flex; gap: 8px; margin: 8px 0; font-size: 0.75rem; color: var(--text-muted); }
+    .tag-item { background: rgba(255,255,255,0.05); padding: 2px 8px; border-radius: 4px; border: 1px solid var(--border-color); }
 
-        body {
-            background-color: #f4f4f4;
-            color: var(--dark-color);
-            line-height: 1.6;
-        }
+    .spicy-select { margin: 10px 0; padding: 6px; border-radius: 6px; background: var(--bg-color); color: var(--text-color); border: 1px solid var(--border-color); width: 100%; font-size: 0.85rem; }
 
-        /* Hero Banner */
-        .hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
-                        url('https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=1000&q=80') center/cover no-repeat;
-            color: white;
-            text-align: center;
-            padding: 80px 20px;
-        }
+    /* Info Cards */
+    .info-card { background: var(--card-bg); padding: 30px; border-radius: 16px; border: 1px solid var(--border-color); margin-bottom: 25px; }
+    
+    /* Modal System */
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
+    .modal.active { display: flex; }
+    .modal-body { background: var(--card-bg); width: 100%; max-width: 550px; border-radius: 16px; padding: 25px; border: 1px solid var(--border-color); max-height: 90vh; overflow-y: auto; }
 
-        .hero h1 {
-            font-size: 2.5rem;
-            color: #ffeb3b;
-            margin-bottom: 10px;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 25px;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 12px 25px;
-            background-color: var(--primary-color);
-            color: white;
-            text-decoration: none;
-            border-radius: 30px;
-            font-weight: 600;
-            font-size: 1.1rem;
-            margin: 5px;
-            transition: 0.3s;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-        }
-
-        .btn-line {
-            background-color: #06C755;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            opacity: 0.9;
-        }
-
-        /* Container Section */
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .section-title {
-            text-align: center;
-            margin: 30px 0 20px;
-            font-size: 1.8rem;
-            color: var(--primary-color);
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 50px;
-            height: 3px;
-            background: var(--secondary-color);
-            margin: 8px auto 0;
-        }
-
-        /* Highlights Grid */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-
-        .card {
-            background: white;
-            border-radius: 12px;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-        }
-
-        .card i {
-            font-size: 2.5rem;
-            color: var(--secondary-color);
-            margin-bottom: 15px;
-        }
-
-        .card h3 {
-            margin-bottom: 10px;
-        }
-
-        /* Services & Banner Box */
-        .special-box {
-            background: #fff3e0;
-            border-left: 5px solid var(--secondary-color);
-            padding: 20px;
-            border-radius: 8px;
-            margin: 20px 0;
-        }
-
-        .special-box h3 {
-            color: var(--secondary-color);
-            margin-bottom: 10px;
-        }
-
-        /* Info & Location */
-        .info-box {
-            background: white;
-            border-radius: 12px;
-            padding: 25px;
-            margin-top: 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-        }
-
-        .info-item {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 15px;
-        }
-
-        .info-item i {
-            font-size: 1.2rem;
-            color: var(--primary-color);
-            margin-right: 15px;
-            margin-top: 5px;
-        }
-
-        /* Footer */
-        footer {
-            background: var(--dark-color);
-            color: white;
-            text-align: center;
-            padding: 20px;
-            margin-top: 40px;
-            font-size: 0.9rem;
-        }
-
-        /* Sticky Call Bar for Mobile */
-        .mobile-sticky-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: white;
-            display: flex;
-            justify-content: space-around;
-            padding: 10px;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-            z-index: 1000;
-        }
-
-        .mobile-sticky-bar .btn {
-            flex: 1;
-            text-align: center;
-            font-size: 0.95rem;
-            padding: 10px;
-            margin: 0 5px;
-        }
-
-        @media (min-width: 768px) {
-            .mobile-sticky-bar {
-                display: none; /* ซ่อนปุ่มลอยเมื่อเปิดบนคอม */
-            }
-        }
-    </style>
+    @media print {
+      body * { visibility: hidden; }
+      #receiptArea, #receiptArea * { visibility: visible; }
+      #receiptArea { position: absolute; left: 0; top: 0; width: 100%; color: black; background: white; padding: 20px; }
+    }
+  </style>
 </head>
 <body>
 
-    <!-- Hero Section -->
-    <header class="hero">
-        <h1>ดนัยคอหมูย่าง</h1>
-        <p>ส้มตำ อาหารอีสานรสเด็ด & หมูกระทะเตาถ่าน</p>
-        <p><i class="fa-solid fa-location-dot"></i> พหลโยธิน 44 (ทางเข้าโรงแรม)</p>
-        <div style="margin-top: 15px;">
-            <a href="tel:0626296544" class="btn"><i class="fa-solid fa-phone"></i> โทรสั่งอาหาร</a>
-            <a href="https://line.me/ti/p/~0643578342" target="_blank" class="btn btn-line"><i class="fa-brands fa-line"></i> สั่งข้าวกล่อง / Line</a>
-        </div>
-    </header>
+  <!-- Header -->
+  <header class="header">
+    <div class="container nav-container">
+      <div class="logo" onclick="switchPage('home')">
+        <i class="fa-solid fa-fire-burner" style="color:var(--primary)"></i> ดนัย <span>คอหมูย่าง</span>
+      </div>
 
+      <ul class="nav-links">
+        <li class="nav-link active" data-page="home" onclick="switchPage('home')">หน้าแรก</li>
+        <li class="nav-link" data-page="menu" onclick="switchPage('menu')">เมนูอาหาร</li>
+        <li class="nav-link" data-page="contact" onclick="switchPage('contact')">ติดต่อเรา</li>
+      </ul>
+      
+      <div class="nav-actions">
+        <button class="btn btn-theme" onclick="toggleTheme()" id="themeBtn"><i class="fa-solid fa-moon"></i></button>
+        <button class="cart-btn" onclick="toggleCartModal()">
+          <i class="fa-solid fa-basket-shopping"></i> <span class="cart-badge" id="cartCount">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HOME PAGE -->
+  <main id="home" class="page active">
     <div class="container">
-        <!-- เมนูเด็ด -->
-        <h2 class="section-title">เมนูเด็ดต้องลอง</h2>
-        <div class="grid">
-            <div class="card">
-                <i class="fa-solid fa-fire-flame-curry"></i>
-                <h3>คอหมูย่าง & หมูปิ้ง</h3>
-                <p>สูตรเด็ดหมักเข้มข้น ย่างเตาถ่านหอมๆ นุ่มฉ่ำทุกคำ</p>
-            </div>
-            <div class="card">
-                <i class="fa-solid fa-pepper-hot"></i>
-                <h3>ส้มตำ & อาหารอีสาน</h3>
-                <p>แซ่บนัว รสจัดจ้าน วัตถุดิบสดใหม่ สะอาด ถูกสุขอนามัย</p>
-            </div>
-            <div class="card">
-                <i class="fa-solid fa-utensils"></i>
-                <h3>หมูกระทะเตาถ่าน</h3>
-                <p>พร้อมเสิร์ฟความแซ่บ น้ำจิ้มรสเด็ด นั่งชิลๆ ยามเย็น</p>
-            </div>
+      <div class="info-card" style="text-align: center; padding: 50px 20px; background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=1200&q=80') center/cover;">
+        <h1 style="font-size: 2.8rem; margin-bottom: 10px; color:white;">🔥 ดนัย คอหมูย่างเตาถ่าน</h1>
+        <p style="color: #ddd; max-width: 650px; margin: 0 auto 20px; font-weight: 300;">
+          คอหมูย่างแท้เกรดพรีเมียม ย่างด้วยเตาถ่านหอมกรุ่น ปลาร้านัว มะนาวแท้ 100% ต้นตำรับความอร่อย
+        </p>
+        <div style="display:flex; justify-content:center; gap:10px;">
+          <button class="btn btn-primary" style="padding: 12px 30px;" onclick="switchPage('menu')">
+            <i class="fa-solid fa-utensils"></i> ดูรายการอาหารทั้งหมด
+          </button>
+          <a href="https://www.facebook.com/DnayKhxHmuYang/" target="_blank" class="btn btn-outline" style="color:white; border-color:white;">
+            <i class="fa-brands fa-facebook"></i> เพจ Facebook
+          </a>
         </div>
-
-        <!-- บริการพิเศษ -->
-        <h2 class="section-title">บริการพิเศษ</h2>
-        <div class="special-box">
-            <h3><i class="fa-solid fa-box-open"></i> รับทำข้าวกล่อง & จัดเลี้ยงนอกสถานที่</h3>
-            <p>บริการจัดทำข้าวกล่อง (เมนูกะเพราดนัย, ข้าวคอหมูย่าง ฯลฯ) สำหรับงานประชุม ออฟฟิศ หรือจัดเลี้ยงต่างๆ มีราคาพิเศษ ทักแชทสั่งล่วงหน้าได้เลย!</p>
-        </div>
-
-        <div class="special-box" style="background: #e8f5e9; border-color: #4caf50;">
-            <h3 style="color: #2e7d32;"><i class="fa-solid fa-truck"></i> พรีออเดอร์หมูปิ้งตอนเช้า</h3>
-            <p>ส่งตามสำนักงาน บริษัท และสถานที่ต่างๆ (เวลาส่ง 07:30 - 09:00 น.)<br>
-            * สั่งขั้นต่ำ 60 ไม้ <strong>ส่งฟรี</strong> บริเวณใกล้เคียงร้าน<br>
-            * แพ็กเกจแคมป์ปิ้ง 20 ไม้ / ถุง (ราคา 200 บาท)</p>
-        </div>
-
-        <!-- ข้อมูลร้าน -->
-        <h2 class="section-title">ข้อมูลและการเดินทาง</h2>
-        <div class="info-box">
-            <div class="info-item">
-                <i class="fa-solid fa-clock"></i>
-                <div>
-                    <strong>เวลาเปิด-ปิด:</strong><br>
-                    11.30 - 23.59 น. (ครัวปิด 21.00 น.)
-                </div>
-            </div>
-            <div class="info-item">
-                <i class="fa-solid fa-map-location-dot"></i>
-                <div>
-                    <strong>ที่อยู่ร้าน:</strong><br>
-                    พหลโยธิน 44 แขวงเสนานิคม เขตจตุจักร กรุงเทพฯ 10900<br>
-                    <small style="color: #666;">* ร้านตั้งอยู่บริเวณทางเข้าโรงแรม</small>
-                </div>
-            </div>
-            <div class="info-item">
-                <i class="fa-solid fa-phone"></i>
-                <div>
-                    <strong>เบอร์โทรศัพท์:</strong> <a href="tel:0626296544">062-629-6544</a>
-                </div>
-            </div>
-            <div class="info-item">
-                <i class="fa-brands fa-facebook"></i>
-                <div>
-                    <strong>Facebook Page:</strong> <a href="https://www.facebook.com/DnayKhxHmuYang/" target="_blank">ดนัยคอหมูย่าง</a>
-                </div>
-            </div>
-
-            <!-- Google Map Embed -->
-            <div style="margin-top: 20px; border-radius: 8px; overflow: hidden;">
-                <iframe 
-                    src="https://maps.google.com/maps?q=พหลโยธิน+44+เสนานิคม+จตุจักร&t=&z=15&ie=UTF8&iwloc=&output=embed" 
-                    width="100%" 
-                    height="250" 
-                    style="border:0;" 
-                    allowfullscreen="" 
-                    loading="lazy">
-                </iframe>
-            </div>
-        </div>
+      </div>
     </div>
+  </main>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; ดนัยคอหมูย่าง - ส้มตำ อาหารอีสานรสเด็ด พหลโยธิน 44</p>
-    </footer>
+  <!-- MENU PAGE (ADVANCED DETAILS) -->
+  <main id="menu" class="page">
+    <div class="container">
+      <h2 style="margin-bottom: 20px;"><i class="fa-solid fa-book-open" style="color:var(--primary);"></i> รายการอาหารและโภชนาการ</h2>
 
-    <!-- Mobile Sticky Call Bar (แสดงเฉพาะบนมือถือ) -->
-    <div class="mobile-sticky-bar">
-        <a href="tel:0626296544" class="btn"><i class="fa-solid fa-phone"></i> โทรสั่งทันที</a>
-        <a href="https://line.me/ti/p/~0643578342" target="_blank" class="btn btn-line"><i class="fa-brands fa-line"></i> แอดไลน์สั่งซื้อ</a>
+      <div class="menu-grid">
+        <!-- ITEM 1: คอหมูย่าง -->
+        <div class="menu-card" data-category="grilled">
+          <span class="card-badge">⭐ เมนูแนะนำ</span>
+          <div class="img-container" onclick="openDetailModal('คอหมูย่างเตาถ่าน', 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80', 'คอหมูแท้เกรดพรีเมียม หมักด้วยเครื่องเทศสูตรเฉพาะ ย่างบนเตาถ่านไม้โกงกาง หอม ฉ่ำ ไม่แห้งกระด้าง', '450 Kcal', 'เนื้อหมูส่วนคอ, รากผักชี, กระเทียม, พริกไทย, น้ำจิ้มแจ่วรสเด็ด', 150)">
+            <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80" class="menu-img" alt="คอหมูย่างเตาถ่าน">
+          </div>
+          <div class="menu-content">
+            <h3>คอหมูย่างเตาถ่าน</h3>
+            <p style="font-size:0.85rem; color:var(--text-muted); margin-top:4px;">คอหมูแท้หมักเข้าเนื้อ ย่างฉ่ำนุ่ม หอมกลิ่นเตาถ่าน</p>
+            
+            <div class="menu-tags">
+              <span class="tag-item"><i class="fa-solid fa-fire"></i> 450 Kcal</span>
+              <span class="tag-item"><i class="fa-solid fa-thumbs-up"></i> ขายดีที่สุด</span>
+            </div>
+
+            <div style="margin-top:auto; padding-top:10px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <span style="font-weight:700; color:var(--secondary); font-size:1.2rem;">150 ฿</span>
+                <button class="btn btn-outline" style="padding:4px 10px; font-size:0.75rem;" onclick="openDetailModal('คอหมูย่างเตาถ่าน', 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80', 'คอหมูแท้เกรดพรีเมียม หมักด้วยเครื่องเทศสูตรเฉพาะ ย่างบนเตาถ่านไม้โกงกาง หอม ฉ่ำ ไม่แห้งกระด้าง', '450 Kcal', 'เนื้อหมูส่วนคอ, รากผักชี, กระเทียม, พริกไทย, น้ำจิ้มแจ่วรสเด็ด', 150)">ดูรายละเอียด</button>
+              </div>
+              <button class="btn btn-primary" style="width:100%; justify-content:center;" onclick="addToCart('คอหมูย่างเตาถ่าน', 150)">+ เพิ่มลงตะกร้า</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ITEM 2: ส้มตำปูปลาร้า -->
+        <div class="menu-card" data-category="somtum">
+          <span class="card-badge" style="background:#E67E22;">🌶️ แซ่บนัว</span>
+          <div class="img-container" onclick="openDetailModal('ส้มตำปูปลาร้า', 'https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=800&q=80', 'ส้มตำมะละกอกรอบ ปลาร้าต้มสุกสูตรเฉพาะร้าน รสนัว ไม่คาว ใช้น้ำมะนาวสดแท้ 100%', '180 Kcal', 'มะละกอสับ, ปลาร้าต้มสุก, ปูเค็ม, มะนาวสด, พริกแห้ง, ถั่วฝักยาว', 80)">
+            <img src="https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=800&q=80" class="menu-img" alt="ส้มตำปูปลาร้า">
+          </div>
+          <div class="menu-content">
+            <h3>ส้มตำปูปลาร้า</h3>
+            <p style="font-size:0.85rem; color:var(--text-muted); margin-top:4px;">ปลาร้าต้มสุกสูตรเฉพาะ รสนัว มะนาวแท้</p>
+            
+            <div class="menu-tags">
+              <span class="tag-item"><i class="fa-solid fa-fire"></i> 180 Kcal</span>
+              <span class="tag-item"><i class="fa-solid fa-pepper-hot"></i> เลือกความเผ็ดได้</span>
+            </div>
+
+            <select class="spicy-select" id="spicy-ตำปูปลาร้า">
+              <option value="เผ็ดปกติ">🔥 เผ็ดปกติ</option>
+              <option value="เผ็ดน้อย">🌶️ เผ็ดน้อย</option>
+              <option value="เผ็ดมาก">🔥🔥 เผ็ดมาก</option>
+            </select>
+
+            <div style="margin-top:auto; padding-top:10px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <span style="font-weight:700; color:var(--secondary); font-size:1.2rem;">80 ฿</span>
+                <button class="btn btn-outline" style="padding:4px 10px; font-size:0.75rem;" onclick="openDetailModal('ส้มตำปูปลาร้า', 'https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=800&q=80', 'ส้มตำมะละกอกรอบ ปลาร้าต้มสุกสูตรเฉพาะร้าน รสนัว ไม่คาว ใช้น้ำมะนาวสดแท้ 100%', '180 Kcal', 'มะละกอสับ, ปลาร้าต้มสุก, ปูเค็ม, มะนาวสด, พริกแห้ง, ถั่วฝักยาว', 80)">ดูรายละเอียด</button>
+              </div>
+              <button class="btn btn-primary" style="width:100%; justify-content:center;" onclick="addSpicyToCart('ส้มตำปูปลาร้า', 80)">+ เพิ่มลงตะกร้า</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ITEM 3: ต้มแซ่บกระดูกอ่อน -->
+        <div class="menu-card" data-category="soup">
+          <div class="img-container" onclick="openDetailModal('ต้มแซ่บกระดูกอ่อน', 'https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=800&q=80', 'ซุปร้อนๆ รสจัดจ้าน กระดูกอ่อนหมูเคี่ยวจนเปื่อยนุ่ม หอมกลิ่นข้าวคั่วและใบกะเพรา', '220 Kcal', 'กระดูกอ่อนหมู, ข่า, ตะไคร้, ใบมะกรูด, ข้าวคั่ว, น้ำมะนาว', 120)">
+            <img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=800&q=80" class="menu-img" alt="ต้มแซ่บกระดูกอ่อน">
+          </div>
+          <div class="menu-content">
+            <h3>ต้มแซ่บกระดูกอ่อน</h3>
+            <p style="font-size:0.85rem; color:var(--text-muted); margin-top:4px;">น้ำซุปรสจัดจ้าน กระดูกอ่อนเคี่ยวเปื่อยนุ่ม</p>
+            
+            <div class="menu-tags">
+              <span class="tag-item"><i class="fa-solid fa-fire"></i> 220 Kcal</span>
+              <span class="tag-item"><i class="fa-solid fa-bowl-food"></i> ซุปร้อน</span>
+            </div>
+
+            <div style="margin-top:auto; padding-top:10px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <span style="font-weight:700; color:var(--secondary); font-size:1.2rem;">120 ฿</span>
+                <button class="btn btn-outline" style="padding:4px 10px; font-size:0.75rem;" onclick="openDetailModal('ต้มแซ่บกระดูกอ่อน', 'https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=800&q=80', 'ซุปร้อนๆ รสจัดจ้าน กระดูกอ่อนหมูเคี่ยวจนเปื่อยนุ่ม หอมกลิ่นข้าวคั่วและใบกะเพรา', '220 Kcal', 'กระดูกอ่อนหมู, ข่า, ตะไคร้, ใบมะกรูด, ข้าวคั่ว, น้ำมะนาว', 120)">ดูรายละเอียด</button>
+              </div>
+              <button class="btn btn-primary" style="width:100%; justify-content:center;" onclick="addToCart('ต้มแซ่บกระดูกอ่อน', 120)">+ เพิ่มลงตะกร้า</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </main>
 
+  <!-- CONTACT PAGE -->
+  <main id="contact" class="page">
+    <div class="container">
+      <div class="info-card">
+        <h2><i class="fa-solid fa-location-dot" style="color:var(--primary)"></i> ข้อมูลร้านและช่องทางติดต่อ</h2>
+        <p style="margin-top:15px;"><strong>ร้านดนัย คอหมูย่าง</strong></p>
+        <p>📍 บริการอาหารอีสานพรีเมียม เตาถ่านฉ่ำนุ่ม</p>
+        <p>🌐 <strong>Facebook Fanpage:</strong> <a href="https://www.facebook.com/DnayKhxHmuYang/" target="_blank" style="color:var(--secondary); text-decoration:underline;">facebook.com/DnayKhxHmuYang/</a></p>
+        <br>
+        <a href="https://www.facebook.com/DnayKhxHmuYang/" target="_blank" class="btn btn-primary">
+          <i class="fa-brands fa-facebook"></i> ไปยัง Facebook Page ของร้าน
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOD DETAIL MODAL (รายละเอียดอาหารขั้นสูง) -->
+  <div class="modal" id="detailModal">
+    <div class="modal-body">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+        <h3 id="modalTitle">ชื่ออาหาร</h3>
+        <span style="cursor:pointer; font-size:1.5rem;" onclick="closeDetailModal()">&times;</span>
+      </div>
+      <img id="modalImg" src="" style="width:100%; height:220px; object-fit:cover; border-radius:12px; margin-bottom:15px;">
+      <p id="modalDesc" style="font-size:0.95rem; margin-bottom:12px; color:var(--text-color);"></p>
+      
+      <div style="background:var(--bg-color); padding:12px; border-radius:8px; border:1px solid var(--border-color); margin-bottom:15px; font-size:0.85rem;">
+        <p>🔥 <strong>แคลอรี:</strong> <span id="modalKcal"></span></p>
+        <p style="margin-top:5px;">🥗 <strong>ส่วนผสมหลัก:</strong> <span id="modalIngredients"></span></p>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <span style="font-weight:700; font-size:1.4rem; color:var(--secondary);" id="modalPrice"></span>
+        <button class="btn btn-primary" id="modalAddBtn">+ เพิ่มลงในตะกร้า</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CART & RECEIPT MODAL -->
+  <div class="modal" id="cartModal">
+    <div class="modal-body">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+        <h3><i class="fa-solid fa-basket-shopping"></i> ตะกร้าสินค้าของคุณ</h3>
+        <span style="cursor:pointer; font-size:1.5rem;" onclick="toggleCartModal()">&times;</span>
+      </div>
+
+      <div id="cartItemsList"></div>
+
+      <div style="margin-top:15px; text-align:right; border-top:1px solid var(--border-color); padding-top:10px;">
+        <h4>รวมทั้งหมด: <span id="cartTotalPrice" style="color:var(--secondary)">0 ฿</span></h4>
+      </div>
+
+      <button class="btn btn-primary" style="width:100%; margin-top:15px; justify-content:center;" onclick="checkout()">
+        <i class="fa-solid fa-qrcode"></i> ชำระเงิน & ออกใบเสร็จ
+      </button>
+
+      <!-- Printable Receipt -->
+      <div id="receiptArea" style="display:none; margin-top:20px; padding:15px; background:white; color:black; border-radius:8px;">
+        <h3 style="text-align:center;">ใบเสร็จรับเงิน / Receipt</h3>
+        <p style="text-align:center; font-size:0.8rem;">ดนัย คอหมูย่าง (facebook.com/DnayKhxHmuYang/)</p>
+        <hr style="margin:10px 0;">
+        <div id="receiptDetails"></div>
+        <div style="text-align:center; margin-top:15px;">
+          <img id="qrCodeImg" src="" style="width:140px; height:140px;">
+        </div>
+        <button class="btn btn-primary" style="width:100%; margin-top:10px;" onclick="window.print()"><i class="fa-solid fa-print"></i> พิมพ์ใบเสร็จ</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 1. Navigation Controller
+    function switchPage(pageId) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+
+      document.getElementById(pageId).classList.add('active');
+      const activeNav = document.querySelector(`.nav-link[data-page="${pageId}"]`);
+      if(activeNav) activeNav.classList.add('active');
+      window.scrollTo(0, 0);
+    }
+
+    // 2. Theme Toggle
+    function toggleTheme() {
+      const isLight = document.body.getAttribute('data-theme') === 'light';
+      document.body.toggleAttribute('data-theme', !isLight);
+      document.getElementById('themeBtn').innerHTML = isLight ? '<i class="fa-solid fa-moon"></i>' : '<i class="fa-solid fa-sun"></i>';
+    }
+
+    // 3. Food Detail Modal System
+    function openDetailModal(name, img, desc, kcal, ingredients, price) {
+      document.getElementById('modalTitle').innerText = name;
+      document.getElementById('modalImg').src = img;
+      document.getElementById('modalDesc').innerText = desc;
+      document.getElementById('modalKcal').innerText = kcal;
+      document.getElementById('modalIngredients').innerText = ingredients;
+      document.getElementById('modalPrice').innerText = price + ' ฿';
+      
+      const addBtn = document.getElementById('modalAddBtn');
+      addBtn.onclick = function() {
+        addToCart(name, price);
+        closeDetailModal();
+      };
+
+      document.getElementById('detailModal').classList.add('active');
+    }
+
+    function closeDetailModal() {
+      document.getElementById('detailModal').classList.remove('active');
+    }
+
+    // 4. Cart Logic
+    let cart = [];
+    function addToCart(name, price, extra = '') {
+      const fullName = extra ? `${name} (${extra})` : name;
+      const item = cart.find(i => i.name === fullName);
+      if(item) item.qty++;
+      else cart.push({ name: fullName, price: price, qty: 1 });
+      updateCart();
+    }
+
+    function addSpicyToCart(name, price) {
+      const spicy = document.getElementById('spicy-ตำปูปลาร้า').value;
+      addToCart(name, price, spicy);
+    }
+
+    function updateCart() {
+      let total = 0, count = 0;
+      const list = document.getElementById('cartItemsList');
+      list.innerHTML = '';
+
+      cart.forEach(item => {
+        total += item.price * item.qty;
+        count += item.qty;
+        list.innerHTML += `<div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+          <span>${item.name} x ${item.qty}</span>
+          <span>${item.price * item.qty} ฿</span>
+        </div>`;
+      });
+
+      document.getElementById('cartCount').innerText = count;
+      document.getElementById('cartTotalPrice').innerText = total + ' ฿';
+    }
+
+    function toggleCartModal() {
+      document.getElementById('cartModal').classList.toggle('active');
+    }
+
+    // 5. Checkout & Receipt
+    function checkout() {
+      if(cart.length === 0) { alert('กรุณาเลือกอาหารก่อนครับ'); return; }
+      
+      let total = 0;
+      let html = '';
+      cart.forEach(item => {
+        total += item.price * item.qty;
+        html += `<div style="display:flex; justify-content:space-between; font-size:0.9rem;">
+          <span>${item.name} x${item.qty}</span>
+          <span>${item.price * item.qty} ฿</span>
+        </div>`;
+      });
+
+      html += `<hr style="margin:5px 0;"><div style="display:flex; justify-content:space-between; font-weight:bold;"><span>ราคารวม:</span><span>${total} ฿</span></div>`;
+
+      document.getElementById('receiptDetails').innerHTML = html;
+      document.getElementById('qrCodeImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Dnay-KhxHmuYang-Total-${total}THB`;
+      document.getElementById('receiptArea').style.display = 'block';
+    }
+  </script>
 </body>
 </html>
